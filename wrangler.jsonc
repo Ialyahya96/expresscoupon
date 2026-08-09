@@ -1,0 +1,20 @@
+{
+  // Without this file the Cloudflare Worker had nothing telling it what to
+  // serve, so it ran the default "Hello world" template — expresscoupon.info
+  // returned 11 bytes for days while the repo held a complete site and every
+  // deploy reported success.
+  //
+  // `assets.directory` points at the Next.js static export (next.config.mjs sets
+  // output:'export'), which is what makes a Worker serve the built site instead
+  // of a script response.
+  //
+  // The build command itself lives in the Cloudflare dashboard, under
+  // Workers & Pages -> expresscoupon -> Settings -> Build:
+  //   Build command:      npm run build
+  //   Deploy command:     npx wrangler deploy
+  "name": "expresscoupon",
+  "compatibility_date": "2026-08-10",
+  "assets": {
+    "directory": "./out"
+  }
+}
