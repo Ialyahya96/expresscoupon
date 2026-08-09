@@ -2,50 +2,93 @@
 
 import { useState } from "react";
 
+// Only codes that actually work at checkout belong here.
+//
+// This list previously held "WALK30" (30% off hawie.shop) and "RACKSBOGO"
+// (buy-one-get-one on racksontop). Neither could ever have worked: hawie.shop
+// sends buyers to Amazon and racksontop sends them to Redbubble, and you cannot
+// issue discount codes for either — the retailer sets the price. A visitor would
+// copy the code, reach checkout, and find it does nothing. On a site whose entire
+// promise is discounts, that is worse than having no offers at all.
+//
+// NEWUSER20 is verified live: the Gumroad product page returns
+// discount_code:{valid:true} with percents:20.
 const coupons = [
   {
-    id: "week",
-    label: "Coupon of the Week",
-    badge: "HOT",
-    title: "30% Off Outdoor Gear",
-    description: "Walking shoes, hiking boots, camping tents — all at 30% off this week only.",
-    code: "WALK30",
-    store: "hawie.shop",
-    expires: "Ends Sunday",
-  },
-  {
-    id: "month",
-    label: "Coupon of the Month",
-    badge: "BEST",
-    title: "Buy 1 Get 1 Free — All Tees",
-    description: "Original design t-shirts from racksontop.me. Buy one, get one free all month.",
-    code: "RACKSBOGO",
-    store: "racksontop.me",
-    expires: "Ends Aug 31",
+    id: "newuser20",
+    label: "New reader offer",
+    badge: "LIVE",
+    title: "20% off The Shadow Work Journal",
+    description:
+      "The full 209-page journal as an instant PDF. 90 days of guided prompts — print it at home or write on a tablet.",
+    code: "NEWUSER20",
+    store: "jrb.codes",
+    // Applying the code via the URL means the discount is already in the cart
+    // when they land, rather than relying on them copying it correctly.
+    url: "https://jrbcodes.gumroad.com/l/shadow-work-printable/NEWUSER20",
+    expires: "Limited time",
   },
 ];
 
-const freebies = [
+// Optimise Media affiliate codes for Huawei and Samsung, by market.
+//
+// These are supplied from the affiliate dashboard rather than verified against a
+// checkout the way NEWUSER20 was — brand storefronts do not expose code validity
+// to an unauthenticated request. They are therefore only as current as the
+// affiliate account says. Re-check them before promoting a campaign; an expired
+// code on a coupon site costs trust faster than a missing one.
+//
+// Region matters: each code is valid on its own country storefront and nowhere
+// else, so the link and the code always travel together.
+// Every one of these excludes newly-released exclusive products, so that caveat
+// is rendered on every card rather than being a footnote — a discount that
+// silently fails on the exact phone someone came to buy is the complaint a
+// coupon site cannot afford.
+const brandCodes = [
+  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://www.huawei.com/sa/" },
+  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://www.huawei.com/ae/" },
+  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://www.huawei.com/qa/" },
+  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://www.huawei.com/kw/" },
+  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://www.huawei.com/eg/" },
+  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://www.samsung.com/sa/" },
+];
+
+const BRAND_CODE_CAVEAT = "Excludes new exclusive products";
+
+// Where the deals point. Everything here has to be something a visitor can
+// actually reach and act on today.
+//
+// Removed from this list: "Free Habit Journal" and "Free Shadow Work Journal
+// with qualifying purchases". No habit journal PDF exists anywhere, and there is
+// no way to detect a qualifying purchase through an affiliate link — Amazon and
+// Redbubble do not tell you who bought. Both were promises nothing could keep.
+// The Audible trial was an untracked link earning nothing.
+const destinations = [
   {
-    title: "Free Habit Journal",
-    description: "Get a free digital habit journal with any purchase. Track your wellness journey.",
-    link: "https://jrb.codes",
-    cta: "Claim on jrb.codes",
-    icon: "📓",
+    title: "The Shadow Work Journal",
+    description:
+      "209 pages, 90 days of prompts. Paperback on Amazon, or the printable PDF at 20% off with the code above.",
+    link: "https://www.amazon.com/dp/B0HDCWTHD2",
+    cta: "See the paperback",
+    icon: "🌙",
+    external: true,
   },
   {
-    title: "Free Audible Trial",
-    description: "Buy any product and get a free Audible trial — listen to self-improvement audiobooks on the go.",
-    link: "https://www.audible.com/ep/free-trial",
-    cta: "Start Audible Trial",
-    icon: "🎧",
+    title: "hawie.shop",
+    description:
+      "Walking, hiking, fishing and camping gear, priced from Amazon.sa and refreshed daily.",
+    link: "https://hawie.shop",
+    cta: "Browse gear",
+    icon: "🥾",
+    external: true,
   },
   {
-    title: "Free Shadow Work Journal",
-    description: "Unlock your inner potential with a free Shadow Work Journal PDF with qualifying purchases.",
-    link: "https://jrb.codes",
-    cta: "Get it on jrb.codes",
-    icon: "🔮",
+    title: "racksontop.me",
+    description: "Streetwear and original designs. Hoodies, tees, jackets and caps.",
+    link: "https://racksontop.me",
+    cta: "Browse clothing",
+    icon: "🧢",
+    external: true,
   },
 ];
 
@@ -84,7 +127,7 @@ export default function Home() {
           Deals that <span className="text-gold-500">hit different</span>
         </h1>
         <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-          Weekly coupons, exclusive discounts, and free digital products with every purchase.
+          Every working discount across hawie.shop, racksontop and jrb.codes — in one place. No expired codes, no dead links.
         </p>
       </section>
 
@@ -123,12 +166,60 @@ export default function Home() {
               </div>
               <div className="mt-4 pt-4 border-t border-ink-700">
                 <a
-                  href={`https://${c.store}`}
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-gold-500 hover:underline"
                 >
-                  Shop at {c.store} →
+                  Claim it — code applies automatically →
                 </a>
               </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Brand codes by market */}
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+          Huawei &amp; Samsung — by country
+        </h2>
+        <p className="text-xs text-zinc-600 mb-6">
+          Each code works only on its own country store. Tap the store link beside it.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {brandCodes.map((b) => (
+            <div
+              key={`${b.brand}-${b.country}`}
+              className="rounded-xl border border-ink-700 bg-ink-800 p-4 hover:border-gold-500/30 transition-all"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-semibold">
+                  {b.flag} {b.brand}
+                </span>
+                <span className="text-xs text-zinc-500">{b.country}</span>
+              </div>
+              <div className="text-2xl font-bold text-gold-500 mb-2">{b.off} off</div>
+              <div className="flex items-center gap-2 mb-3">
+                <code className="px-2 py-1 rounded bg-ink-900 border border-ink-700 text-gold-500 font-mono text-sm font-bold">
+                  {b.code}
+                </code>
+                <button
+                  onClick={() => copyCode(b.code)}
+                  className="text-xs text-zinc-500 hover:text-gold-500 transition-colors"
+                >
+                  {copied === b.code ? "✓ Copied!" : "Copy"}
+                </button>
+              </div>
+              <p className="text-xs text-zinc-600 mb-2">{BRAND_CODE_CAVEAT}</p>
+              <a
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gold-500 hover:underline"
+              >
+                Open {b.brand} {b.country} →
+              </a>
             </div>
           ))}
         </div>
@@ -137,10 +228,10 @@ export default function Home() {
       {/* Freebies */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
         <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-6">
-          Free With Any Purchase
+          Where the deals lead
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {freebies.map((f, i) => (
+          {destinations.map((f, i) => (
             <div
               key={i}
               className="rounded-2xl border border-ink-700 bg-ink-800 p-6 hover:border-gold-500/30 transition-all"
@@ -163,10 +254,10 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-6 pb-20">
         <div className="rounded-2xl bg-gradient-to-r from-gold-500/20 to-gold-500/5 border border-gold-500/30 p-8 text-center">
           <h2 className="text-2xl font-bold mb-2">
-            Get a free product with every coupon
+            One discount at a time, and it works
           </h2>
           <p className="text-zinc-400 mb-6">
-            Use any coupon above and get free access to a habit journal, lifting book, or Audible trial.
+            Every code here is checked against the real checkout before it goes up. When there is nothing genuine to offer, this page stays empty rather than wasting your time.
           </p>
           <a
             href="https://jrb.codes"
