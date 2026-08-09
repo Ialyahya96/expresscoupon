@@ -40,14 +40,20 @@ const coupons = [
 //
 // Region matters: each code is valid on its own country storefront and nowhere
 // else, so the link and the code always travel together.
+// Every one of these excludes newly-released exclusive products, so that caveat
+// is rendered on every card rather than being a footnote — a discount that
+// silently fails on the exact phone someone came to buy is the complaint a
+// coupon site cannot afford.
 const brandCodes = [
-  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", url: "https://www.huawei.com/sa/", note: "Excludes exclusive products" },
-  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", url: "https://www.huawei.com/ae/", note: null },
-  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", url: "https://www.huawei.com/qa/", note: null },
-  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", url: "https://www.huawei.com/eg/", note: null },
-  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", url: "https://www.huawei.com/kw/", note: null },
-  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", url: "https://www.samsung.com/sa/", note: null },
+  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://www.huawei.com/sa/" },
+  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://www.huawei.com/ae/" },
+  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://www.huawei.com/qa/" },
+  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://www.huawei.com/kw/" },
+  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://www.huawei.com/eg/" },
+  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://www.samsung.com/sa/" },
 ];
+
+const BRAND_CODE_CAVEAT = "Excludes new exclusive products";
 
 // Where the deals point. Everything here has to be something a visitor can
 // actually reach and act on today.
@@ -187,12 +193,13 @@ export default function Home() {
               key={`${b.brand}-${b.country}`}
               className="rounded-xl border border-ink-700 bg-ink-800 p-4 hover:border-gold-500/30 transition-all"
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-1">
                 <span className="text-sm font-semibold">
                   {b.flag} {b.brand}
                 </span>
                 <span className="text-xs text-zinc-500">{b.country}</span>
               </div>
+              <div className="text-2xl font-bold text-gold-500 mb-2">{b.off} off</div>
               <div className="flex items-center gap-2 mb-3">
                 <code className="px-2 py-1 rounded bg-ink-900 border border-ink-700 text-gold-500 font-mono text-sm font-bold">
                   {b.code}
@@ -204,7 +211,7 @@ export default function Home() {
                   {copied === b.code ? "✓ Copied!" : "Copy"}
                 </button>
               </div>
-              {b.note && <p className="text-xs text-zinc-600 mb-2">{b.note}</p>}
+              <p className="text-xs text-zinc-600 mb-2">{BRAND_CODE_CAVEAT}</p>
               <a
                 href={b.url}
                 target="_blank"
