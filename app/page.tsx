@@ -2,50 +2,68 @@
 
 import { useState } from "react";
 
+// Only codes that actually work at checkout belong here.
+//
+// This list previously held "WALK30" (30% off hawie.shop) and "RACKSBOGO"
+// (buy-one-get-one on racksontop). Neither could ever have worked: hawie.shop
+// sends buyers to Amazon and racksontop sends them to Redbubble, and you cannot
+// issue discount codes for either — the retailer sets the price. A visitor would
+// copy the code, reach checkout, and find it does nothing. On a site whose entire
+// promise is discounts, that is worse than having no offers at all.
+//
+// NEWUSER20 is verified live: the Gumroad product page returns
+// discount_code:{valid:true} with percents:20.
 const coupons = [
   {
-    id: "week",
-    label: "Coupon of the Week",
-    badge: "HOT",
-    title: "30% Off Outdoor Gear",
-    description: "Walking shoes, hiking boots, camping tents — all at 30% off this week only.",
-    code: "WALK30",
-    store: "hawie.shop",
-    expires: "Ends Sunday",
-  },
-  {
-    id: "month",
-    label: "Coupon of the Month",
-    badge: "BEST",
-    title: "Buy 1 Get 1 Free — All Tees",
-    description: "Original design t-shirts from racksontop.me. Buy one, get one free all month.",
-    code: "RACKSBOGO",
-    store: "racksontop.me",
-    expires: "Ends Aug 31",
+    id: "newuser20",
+    label: "New reader offer",
+    badge: "LIVE",
+    title: "20% off The Shadow Work Journal",
+    description:
+      "The full 209-page journal as an instant PDF. 90 days of guided prompts — print it at home or write on a tablet.",
+    code: "NEWUSER20",
+    store: "jrb.codes",
+    // Applying the code via the URL means the discount is already in the cart
+    // when they land, rather than relying on them copying it correctly.
+    url: "https://jrbcodes.gumroad.com/l/shadow-work-printable/NEWUSER20",
+    expires: "Limited time",
   },
 ];
 
-const freebies = [
+// Where the deals point. Everything here has to be something a visitor can
+// actually reach and act on today.
+//
+// Removed from this list: "Free Habit Journal" and "Free Shadow Work Journal
+// with qualifying purchases". No habit journal PDF exists anywhere, and there is
+// no way to detect a qualifying purchase through an affiliate link — Amazon and
+// Redbubble do not tell you who bought. Both were promises nothing could keep.
+// The Audible trial was an untracked link earning nothing.
+const destinations = [
   {
-    title: "Free Habit Journal",
-    description: "Get a free digital habit journal with any purchase. Track your wellness journey.",
-    link: "https://jrb.codes",
-    cta: "Claim on jrb.codes",
-    icon: "📓",
+    title: "The Shadow Work Journal",
+    description:
+      "209 pages, 90 days of prompts. Paperback on Amazon, or the printable PDF at 20% off with the code above.",
+    link: "https://www.amazon.com/dp/B0HDCWTHD2",
+    cta: "See the paperback",
+    icon: "🌙",
+    external: true,
   },
   {
-    title: "Free Audible Trial",
-    description: "Buy any product and get a free Audible trial — listen to self-improvement audiobooks on the go.",
-    link: "https://www.audible.com/ep/free-trial",
-    cta: "Start Audible Trial",
-    icon: "🎧",
+    title: "hawie.shop",
+    description:
+      "Walking, hiking, fishing and camping gear, priced from Amazon.sa and refreshed daily.",
+    link: "https://hawie.shop",
+    cta: "Browse gear",
+    icon: "🥾",
+    external: true,
   },
   {
-    title: "Free Shadow Work Journal",
-    description: "Unlock your inner potential with a free Shadow Work Journal PDF with qualifying purchases.",
-    link: "https://jrb.codes",
-    cta: "Get it on jrb.codes",
-    icon: "🔮",
+    title: "racksontop.me",
+    description: "Streetwear and original designs. Hoodies, tees, jackets and caps.",
+    link: "https://racksontop.me",
+    cta: "Browse clothing",
+    icon: "🧢",
+    external: true,
   },
 ];
 
@@ -84,7 +102,7 @@ export default function Home() {
           Deals that <span className="text-gold-500">hit different</span>
         </h1>
         <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-          Weekly coupons, exclusive discounts, and free digital products with every purchase.
+          Every working discount across hawie.shop, racksontop and jrb.codes — in one place. No expired codes, no dead links.
         </p>
       </section>
 
@@ -123,10 +141,12 @@ export default function Home() {
               </div>
               <div className="mt-4 pt-4 border-t border-ink-700">
                 <a
-                  href={`https://${c.store}`}
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-gold-500 hover:underline"
                 >
-                  Shop at {c.store} →
+                  Claim it — code applies automatically →
                 </a>
               </div>
             </div>
@@ -137,10 +157,10 @@ export default function Home() {
       {/* Freebies */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
         <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-6">
-          Free With Any Purchase
+          Where the deals lead
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {freebies.map((f, i) => (
+          {destinations.map((f, i) => (
             <div
               key={i}
               className="rounded-2xl border border-ink-700 bg-ink-800 p-6 hover:border-gold-500/30 transition-all"
@@ -163,10 +183,10 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-6 pb-20">
         <div className="rounded-2xl bg-gradient-to-r from-gold-500/20 to-gold-500/5 border border-gold-500/30 p-8 text-center">
           <h2 className="text-2xl font-bold mb-2">
-            Get a free product with every coupon
+            One discount at a time, and it works
           </h2>
           <p className="text-zinc-400 mb-6">
-            Use any coupon above and get free access to a habit journal, lifting book, or Audible trial.
+            Every code here is checked against the real checkout before it goes up. When there is nothing genuine to offer, this page stays empty rather than wasting your time.
           </p>
           <a
             href="https://jrb.codes"
