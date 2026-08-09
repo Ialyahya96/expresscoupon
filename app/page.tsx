@@ -30,6 +30,25 @@ const coupons = [
   },
 ];
 
+// Optimise Media affiliate codes for Huawei and Samsung, by market.
+//
+// These are supplied from the affiliate dashboard rather than verified against a
+// checkout the way NEWUSER20 was — brand storefronts do not expose code validity
+// to an unauthenticated request. They are therefore only as current as the
+// affiliate account says. Re-check them before promoting a campaign; an expired
+// code on a coupon site costs trust faster than a missing one.
+//
+// Region matters: each code is valid on its own country storefront and nowhere
+// else, so the link and the code always travel together.
+const brandCodes = [
+  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", url: "https://www.huawei.com/sa/", note: "Excludes exclusive products" },
+  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", url: "https://www.huawei.com/ae/", note: null },
+  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", url: "https://www.huawei.com/qa/", note: null },
+  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", url: "https://www.huawei.com/eg/", note: null },
+  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", url: "https://www.huawei.com/kw/", note: null },
+  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", url: "https://www.samsung.com/sa/", note: null },
+];
+
 // Where the deals point. Everything here has to be something a visitor can
 // actually reach and act on today.
 //
@@ -149,6 +168,51 @@ export default function Home() {
                   Claim it — code applies automatically →
                 </a>
               </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Brand codes by market */}
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+          Huawei &amp; Samsung — by country
+        </h2>
+        <p className="text-xs text-zinc-600 mb-6">
+          Each code works only on its own country store. Tap the store link beside it.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {brandCodes.map((b) => (
+            <div
+              key={`${b.brand}-${b.country}`}
+              className="rounded-xl border border-ink-700 bg-ink-800 p-4 hover:border-gold-500/30 transition-all"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-semibold">
+                  {b.flag} {b.brand}
+                </span>
+                <span className="text-xs text-zinc-500">{b.country}</span>
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <code className="px-2 py-1 rounded bg-ink-900 border border-ink-700 text-gold-500 font-mono text-sm font-bold">
+                  {b.code}
+                </code>
+                <button
+                  onClick={() => copyCode(b.code)}
+                  className="text-xs text-zinc-500 hover:text-gold-500 transition-colors"
+                >
+                  {copied === b.code ? "✓ Copied!" : "Copy"}
+                </button>
+              </div>
+              {b.note && <p className="text-xs text-zinc-600 mb-2">{b.note}</p>}
+              <a
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gold-500 hover:underline"
+              >
+                Open {b.brand} {b.country} →
+              </a>
             </div>
           ))}
         </div>
