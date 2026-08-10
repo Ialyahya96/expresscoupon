@@ -38,6 +38,15 @@ const coupons = [
 // affiliate account says. Re-check them before promoting a campaign; an expired
 // code on a coupon site costs trust faster than a missing one.
 //
+// `url` is the Optimise tracked deeplink, not the brand's own storefront, so a
+// click is attributed. Each was checked end to end: all six return 200, land on
+// the matching country store (sa-en, ae-en, qa, kw-en, eg-en, sa_en) and carry
+// an sskey= parameter.
+//
+// Note for anyone re-checking these: omgrefer.com returns 404 to plain HTTP
+// clients and only resolves for a browser-like request. A bare `curl` will
+// suggest all six are dead when they are fine.
+//
 // Region matters: each code is valid on its own country storefront and nowhere
 // else, so the link and the code always travel together.
 // Every one of these excludes newly-released exclusive products, so that caveat
@@ -45,12 +54,12 @@ const coupons = [
 // silently fails on the exact phone someone came to buy is the complaint a
 // coupon site cannot afford.
 const brandCodes = [
-  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://www.huawei.com/sa/" },
-  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://www.huawei.com/ae/" },
-  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://www.huawei.com/qa/" },
-  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://www.huawei.com/kw/" },
-  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://www.huawei.com/eg/" },
-  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://www.samsung.com/sa/" },
+  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://omgrefer.com/oU0fq" },
+  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://omgrefer.com/KfkUv" },
+  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://omgrefer.com/HX4iC" },
+  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://omgrefer.com/8W0tv" },
+  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://omgrefer.com/FRbqj" },
+  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://omgrefer.com/vQcuP" },
 ];
 
 const BRAND_CODE_CAVEAT = "Excludes new exclusive products";
@@ -215,7 +224,8 @@ export default function Home() {
               <a
                 href={b.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                /* Paid affiliate deeplinks, same as the AliExpress cards. */
+                rel="sponsored noopener noreferrer"
                 className="text-xs text-accent-600 hover:underline"
               >
                 Open {b.brand} {b.country} →
