@@ -104,17 +104,17 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Header */}
-      <header className="border-b border-ink-700">
+      <header className="border-b border-black/[0.06]">
         <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🏷️</span>
             <span className="text-xl font-bold">
-              express<span className="text-gold-500">coupon</span>
+              express<span className="text-gold-600">coupon</span>
             </span>
           </div>
           <a
             href="https://jrb.codes"
-            className="text-sm text-zinc-400 hover:text-gold-500 transition-colors"
+            className="text-sm text-zinc-600 hover:text-gold-600 transition-colors"
           >
             jrb.codes →
           </a>
@@ -123,53 +123,53 @@ export default function Home() {
 
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Deals that <span className="text-gold-500">hit different</span>
+        <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
+          Deals that <span className="text-gold-600">hit different</span>
         </h1>
-        <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+        <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
           Every working discount across hawie.shop, racksontop and jrb.codes — in one place. No expired codes, no dead links.
         </p>
       </section>
 
       {/* Coupons */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
-        <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-6">
+        <h2 className="text-sm font-semibold text-zinc-700 uppercase tracking-wider mb-6">
           Active Coupons
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
           {coupons.map((c) => (
             <div
               key={c.id}
-              className="rounded-2xl border border-ink-700 bg-ink-800 p-6 hover:border-gold-500/30 transition-all"
+              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-gold-500/30 transition-all"
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold px-2 py-1 rounded bg-gold-500/20 text-gold-500">
+                <span className="text-xs font-bold px-2 py-1 rounded bg-gold-500/10 text-gold-600">
                   {c.badge}
                 </span>
                 <span className="text-xs text-zinc-500">{c.label}</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">{c.title}</h3>
-              <p className="text-sm text-zinc-400 mb-4">{c.description}</p>
+              <h3 className="text-xl font-bold text-black mb-2">{c.title}</h3>
+              <p className="text-sm text-zinc-600 mb-4">{c.description}</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <code className="px-3 py-2 rounded-lg bg-ink-900 border border-ink-700 text-gold-500 font-mono font-bold">
+                  <code className="px-3 py-2 rounded-lg bg-ink-800 border border-black/[0.06] text-gold-600 font-mono font-bold">
                     {c.code}
                   </code>
                   <button
                     onClick={() => copyCode(c.code)}
-                    className="text-xs text-zinc-500 hover:text-gold-500 transition-colors"
+                    className="text-xs text-zinc-500 hover:text-gold-600 transition-colors"
                   >
                     {copied === c.code ? "✓ Copied!" : "Copy"}
                   </button>
                 </div>
-                <span className="text-xs text-zinc-600">{c.expires}</span>
+                <span className="text-xs text-zinc-500">{c.expires}</span>
               </div>
-              <div className="mt-4 pt-4 border-t border-ink-700">
+              <div className="mt-4 pt-4 border-t border-black/[0.06]">
                 <a
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gold-500 hover:underline"
+                  className="text-sm text-gold-600 hover:underline"
                 >
                   Claim it — code applies automatically →
                 </a>
@@ -181,17 +181,17 @@ export default function Home() {
 
       {/* Brand codes by market */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
-        <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-2">
+        <h2 className="text-sm font-semibold text-zinc-700 uppercase tracking-wider mb-2">
           Huawei &amp; Samsung — by country
         </h2>
-        <p className="text-xs text-zinc-600 mb-6">
+        <p className="text-xs text-zinc-500 mb-6">
           Each code works only on its own country store. Tap the store link beside it.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {brandCodes.map((b) => (
             <div
               key={`${b.brand}-${b.country}`}
-              className="rounded-xl border border-ink-700 bg-ink-800 p-4 hover:border-gold-500/30 transition-all"
+              className="rounded-xl border border-black/[0.06] bg-white p-4 hover:border-gold-500/30 transition-all"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-sm font-semibold">
@@ -199,24 +199,24 @@ export default function Home() {
                 </span>
                 <span className="text-xs text-zinc-500">{b.country}</span>
               </div>
-              <div className="text-2xl font-bold text-gold-500 mb-2">{b.off} off</div>
+              <div className="text-2xl font-bold text-gold-600 mb-2">{b.off} off</div>
               <div className="flex items-center gap-2 mb-3">
-                <code className="px-2 py-1 rounded bg-ink-900 border border-ink-700 text-gold-500 font-mono text-sm font-bold">
+                <code className="px-2 py-1 rounded bg-ink-800 border border-black/[0.06] text-gold-600 font-mono text-sm font-bold">
                   {b.code}
                 </code>
                 <button
                   onClick={() => copyCode(b.code)}
-                  className="text-xs text-zinc-500 hover:text-gold-500 transition-colors"
+                  className="text-xs text-zinc-500 hover:text-gold-600 transition-colors"
                 >
                   {copied === b.code ? "✓ Copied!" : "Copy"}
                 </button>
               </div>
-              <p className="text-xs text-zinc-600 mb-2">{BRAND_CODE_CAVEAT}</p>
+              <p className="text-xs text-zinc-500 mb-2">{BRAND_CODE_CAVEAT}</p>
               <a
                 href={b.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-gold-500 hover:underline"
+                className="text-xs text-gold-600 hover:underline"
               >
                 Open {b.brand} {b.country} →
               </a>
@@ -227,21 +227,21 @@ export default function Home() {
 
       {/* Freebies */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
-        <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-6">
+        <h2 className="text-sm font-semibold text-zinc-700 uppercase tracking-wider mb-6">
           Where the deals lead
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {destinations.map((f, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-ink-700 bg-ink-800 p-6 hover:border-gold-500/30 transition-all"
+              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-gold-500/30 transition-all"
             >
               <div className="text-3xl mb-3">{f.icon}</div>
-              <h3 className="text-lg font-bold mb-2">{f.title}</h3>
-              <p className="text-sm text-zinc-400 mb-4">{f.description}</p>
+              <h3 className="text-lg font-bold text-black mb-2">{f.title}</h3>
+              <p className="text-sm text-zinc-600 mb-4">{f.description}</p>
               <a
                 href={f.link}
-                className="inline-block text-sm text-gold-500 hover:underline"
+                className="inline-block text-sm text-gold-600 hover:underline"
               >
                 {f.cta} →
               </a>
@@ -253,15 +253,15 @@ export default function Home() {
       {/* CTA Banner */}
       <section className="max-w-4xl mx-auto px-6 pb-20">
         <div className="rounded-2xl bg-gradient-to-r from-gold-500/20 to-gold-500/5 border border-gold-500/30 p-8 text-center">
-          <h2 className="text-2xl font-bold mb-2">
+          <h2 className="text-2xl font-bold text-black mb-2">
             One discount at a time, and it works
           </h2>
-          <p className="text-zinc-400 mb-6">
+          <p className="text-zinc-600 mb-6">
             Every code here is checked against the real checkout before it goes up. When there is nothing genuine to offer, this page stays empty rather than wasting your time.
           </p>
           <a
             href="https://jrb.codes"
-            className="inline-block px-8 py-3 rounded-xl bg-gold-500 text-ink-900 font-bold hover:bg-gold-400 transition-colors"
+            className="inline-block px-8 py-3 rounded-xl bg-gold-500 text-black font-bold hover:bg-gold-600 transition-colors"
           >
             Claim your freebie →
           </a>
@@ -269,15 +269,15 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-ink-700">
+      <footer className="border-t border-black/[0.06]">
         <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-sm text-zinc-500">
-            <span>🏷️ expresscoupon.io</span>
+            <span>🏷️ expresscoupon.info</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-zinc-500">
-            <a href="https://hawie.shop" className="hover:text-gold-500 transition-colors">hawie.shop</a>
-            <a href="https://racksontop.me" className="hover:text-gold-500 transition-colors">racksontop.me</a>
-            <a href="https://jrb.codes" className="hover:text-gold-500 transition-colors">jrb.codes</a>
+            <a href="https://hawie.shop" className="hover:text-gold-600 transition-colors">hawie.shop</a>
+            <a href="https://racksontop.me" className="hover:text-gold-600 transition-colors">racksontop.me</a>
+            <a href="https://jrb.codes" className="hover:text-gold-600 transition-colors">jrb.codes</a>
           </div>
         </div>
       </footer>

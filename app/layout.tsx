@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Express Coupon — Deals, Discounts & Freebies",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-h-screen bg-ink-900 text-black">
+        {children}
+        <ThemeToggle />
+      </body>
     </html>
   );
 }
