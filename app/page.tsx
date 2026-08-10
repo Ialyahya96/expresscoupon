@@ -23,8 +23,13 @@ const coupons = [
       "The full 209-page journal as an instant PDF. 90 days of guided prompts — print it at home or write on a tablet.",
     code: "NEWUSER20",
     store: "jrb.codes",
-    // Applying the code via the URL means the discount is already in the cart
-    // when they land, rather than relying on them copying it correctly.
+    // The /NEWUSER20 suffix makes Gumroad recognise the code — the product page
+    // returns discount_code:{valid:true,percents:20} with it and nothing
+    // without it — but it does NOT apply the discount. price_cents comes back
+    // as 499 either way, so the buyer still types the code at checkout. The
+    // card used to promise it applied automatically; on a site whose whole
+    // promise is that the codes work, an instruction that is wrong about *how*
+    // they work costs the same trust as a dead code.
     url: "https://jrbcodes.gumroad.com/l/shadow-work-printable/NEWUSER20",
     expires: "Limited time",
   },
@@ -180,7 +185,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="text-sm text-accent-600 hover:underline"
                 >
-                  Claim it — code applies automatically →
+                  Claim it — enter {c.code} at checkout →
                 </a>
               </div>
             </div>
