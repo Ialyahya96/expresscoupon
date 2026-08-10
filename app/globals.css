@@ -2,13 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mirrors racksontop.me's globals.css: light by default, with an opt-in dark
+   override driven by the ThemeToggle button. The variables are kept because the
+   page reads them for the one-off gradient, but they now describe paper rather
+   than ink. */
 :root {
-  --bg: #0a0a0f;
-  --surface: #13131a;
-  --border: #1c1c26;
-  --gold: #f59e0b;
-  --text: #e4e4e7;
-  --muted: #71717a;
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.06);
+  --gold: #c8a247;
+  --text: #0e1014;
+  --muted: #52525b;
 }
 
 * {
@@ -20,6 +24,37 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   min-height: 100vh;
 }
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: 'kern', 'liga', 'calt';
+}
+
+::selection {
+  background: #c8a247;
+  color: white;
+}
+
+/* Dark theme via toggle — the same class-based overrides racksontop uses, so a
+   reader who preferred the old dark expresscoupon can still get it. */
+html.theme-dark body {
+  background: #0a0a0f;
+  color: #e4e4e7;
+}
+html.theme-dark .bg-ink-900 { background-color: #0a0a0f !important; }
+html.theme-dark .bg-ink-800 { background-color: #13131a !important; }
+html.theme-dark .bg-ink-700 { background-color: #1c1c26 !important; }
+html.theme-dark .border-ink-700 { border-color: #1c1c26 !important; }
+html.theme-dark .bg-white { background-color: #18181b !important; }
+html.theme-dark .text-black { color: #fafaf7 !important; }
+html.theme-dark .text-zinc-400 { color: #a1a1aa !important; }
+html.theme-dark .text-zinc-500 { color: #71717a !important; }
+html.theme-dark .text-zinc-600 { color: #52525b !important; }
+html.theme-dark .text-zinc-700 { color: #d4d4d8 !important; }
+html.theme-dark .border-black\/\[0\.06\] { border-color: rgba(250, 250, 247, 0.08) !important; }
