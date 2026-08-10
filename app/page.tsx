@@ -109,12 +109,12 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <span className="text-2xl">🏷️</span>
             <span className="text-xl font-bold">
-              express<span className="text-gold-600">coupon</span>
+              express<span className="text-accent-600">coupon</span>
             </span>
           </div>
           <a
             href="https://jrb.codes"
-            className="text-sm text-zinc-600 hover:text-gold-600 transition-colors"
+            className="text-sm text-zinc-600 hover:text-accent-600 transition-colors"
           >
             jrb.codes →
           </a>
@@ -124,7 +124,7 @@ export default function Home() {
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
-          Deals that <span className="text-gold-600">hit different</span>
+          Deals that <span className="text-accent-600">hit different</span>
         </h1>
         <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
           Every working discount across hawie.shop, racksontop and jrb.codes — in one place. No expired codes, no dead links.
@@ -140,10 +140,10 @@ export default function Home() {
           {coupons.map((c) => (
             <div
               key={c.id}
-              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-gold-500/30 transition-all"
+              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-accent-500/30 transition-all"
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold px-2 py-1 rounded bg-gold-500/10 text-gold-600">
+                <span className="text-xs font-bold px-2 py-1 rounded bg-accent-500/10 text-accent-600">
                   {c.badge}
                 </span>
                 <span className="text-xs text-zinc-500">{c.label}</span>
@@ -152,12 +152,12 @@ export default function Home() {
               <p className="text-sm text-zinc-600 mb-4">{c.description}</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <code className="px-3 py-2 rounded-lg bg-ink-800 border border-black/[0.06] text-gold-600 font-mono font-bold">
+                  <code className="px-3 py-2 rounded-lg bg-ink-800 border border-black/[0.06] text-accent-600 font-mono font-bold">
                     {c.code}
                   </code>
                   <button
                     onClick={() => copyCode(c.code)}
-                    className="text-xs text-zinc-500 hover:text-gold-600 transition-colors"
+                    className="text-xs text-zinc-500 hover:text-accent-600 transition-colors"
                   >
                     {copied === c.code ? "✓ Copied!" : "Copy"}
                   </button>
@@ -169,7 +169,7 @@ export default function Home() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gold-600 hover:underline"
+                  className="text-sm text-accent-600 hover:underline"
                 >
                   Claim it — code applies automatically →
                 </a>
@@ -191,7 +191,7 @@ export default function Home() {
           {brandCodes.map((b) => (
             <div
               key={`${b.brand}-${b.country}`}
-              className="rounded-xl border border-black/[0.06] bg-white p-4 hover:border-gold-500/30 transition-all"
+              className="rounded-xl border border-black/[0.06] bg-white p-4 hover:border-accent-500/30 transition-all"
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-sm font-semibold">
@@ -199,14 +199,14 @@ export default function Home() {
                 </span>
                 <span className="text-xs text-zinc-500">{b.country}</span>
               </div>
-              <div className="text-2xl font-bold text-gold-600 mb-2">{b.off} off</div>
+              <div className="text-2xl font-bold text-accent-600 mb-2">{b.off} off</div>
               <div className="flex items-center gap-2 mb-3">
-                <code className="px-2 py-1 rounded bg-ink-800 border border-black/[0.06] text-gold-600 font-mono text-sm font-bold">
+                <code className="px-2 py-1 rounded bg-ink-800 border border-black/[0.06] text-accent-600 font-mono text-sm font-bold">
                   {b.code}
                 </code>
                 <button
                   onClick={() => copyCode(b.code)}
-                  className="text-xs text-zinc-500 hover:text-gold-600 transition-colors"
+                  className="text-xs text-zinc-500 hover:text-accent-600 transition-colors"
                 >
                   {copied === b.code ? "✓ Copied!" : "Copy"}
                 </button>
@@ -216,7 +216,7 @@ export default function Home() {
                 href={b.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-gold-600 hover:underline"
+                className="text-xs text-accent-600 hover:underline"
               >
                 Open {b.brand} {b.country} →
               </a>
@@ -234,14 +234,14 @@ export default function Home() {
           {destinations.map((f, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-gold-500/30 transition-all"
+              className="rounded-2xl border border-black/[0.06] bg-white p-6 hover:border-accent-500/30 transition-all"
             >
               <div className="text-3xl mb-3">{f.icon}</div>
               <h3 className="text-lg font-bold text-black mb-2">{f.title}</h3>
               <p className="text-sm text-zinc-600 mb-4">{f.description}</p>
               <a
                 href={f.link}
-                className="inline-block text-sm text-gold-600 hover:underline"
+                className="inline-block text-sm text-accent-600 hover:underline"
               >
                 {f.cta} →
               </a>
@@ -252,7 +252,7 @@ export default function Home() {
 
       {/* CTA Banner */}
       <section className="max-w-4xl mx-auto px-6 pb-20">
-        <div className="rounded-2xl bg-gradient-to-r from-gold-500/20 to-gold-500/5 border border-gold-500/30 p-8 text-center">
+        <div className="rounded-2xl bg-gradient-to-r from-accent-500/20 to-accent-500/5 border border-accent-500/30 p-8 text-center">
           <h2 className="text-2xl font-bold text-black mb-2">
             One discount at a time, and it works
           </h2>
@@ -261,7 +261,7 @@ export default function Home() {
           </p>
           <a
             href="https://jrb.codes"
-            className="inline-block px-8 py-3 rounded-xl bg-gold-500 text-black font-bold hover:bg-gold-600 transition-colors"
+            className="inline-block px-8 py-3 rounded-xl bg-accent-500 text-black font-bold hover:bg-accent-600 transition-colors"
           >
             Claim your freebie →
           </a>
@@ -275,9 +275,9 @@ export default function Home() {
             <span>🏷️ expresscoupon.info</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-zinc-500">
-            <a href="https://hawie.shop" className="hover:text-gold-600 transition-colors">hawie.shop</a>
-            <a href="https://racksontop.me" className="hover:text-gold-600 transition-colors">racksontop.me</a>
-            <a href="https://jrb.codes" className="hover:text-gold-600 transition-colors">jrb.codes</a>
+            <a href="https://hawie.shop" className="hover:text-accent-600 transition-colors">hawie.shop</a>
+            <a href="https://racksontop.me" className="hover:text-accent-600 transition-colors">racksontop.me</a>
+            <a href="https://jrb.codes" className="hover:text-accent-600 transition-colors">jrb.codes</a>
           </div>
         </div>
       </footer>

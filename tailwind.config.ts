@@ -12,18 +12,26 @@ const config: Config = {
       // — the scale is "page, raised surface, border", and renaming it would
       // have meant touching every class in the page for no visual gain.
       colors: {
+        // Cool neutrals, where racksontop and jrb use warm paper. Indigo on a
+        // cream chip reads as a mismatch rather than a choice, and the neutral
+        // is doing as much of the differentiating here as the accent is.
         ink: {
-          900: "#fafaf7",
-          800: "#f0ede5",
-          700: "#e6e2d8",
+          900: "#fafafb",
+          800: "#f1f2f7",
+          700: "#e3e5ef",
         },
-        // The old gold was #f59e0b, an amber picked to glow on a black
-        // background. On paper it reads as a warning colour, so this is
-        // racksontop's quieter gold: 500 for fills, 600 for text that has to
-        // clear contrast against the light background.
-        gold: {
-          500: "#c8a247",
-          600: "#a8862e",
+        // expresscoupon had racksontop's gold, which made the two sites look
+        // like one brand. Each site now owns a hue: racksontop gold, hawie
+        // coral, jrb green, expresscoupon indigo. Indigo is the one gap in
+        // that set, and it suits a deals site — the obvious alternative, a
+        // discount red, sits too close to hawie's coral to tell apart in a
+        // browser tab.
+        //
+        // Named `accent`, not `gold`. Leaving indigo under the name `gold`
+        // would mislead the next person to open this file.
+        accent: {
+          500: "#4f46e5",
+          600: "#4338ca",
         },
       },
     },
