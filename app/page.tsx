@@ -90,7 +90,7 @@ const destinations = [
   {
     title: "hawie.shop",
     description:
-      "Walking, hiking, fishing and camping gear, priced from Amazon.sa and refreshed daily.",
+      "Gear for walking, trailing, hiking and staying hydrated. Priced from Amazon.sa and refreshed daily.",
     link: "https://hawie.shop",
     cta: "Browse gear",
     icon: "🥾",
@@ -98,7 +98,7 @@ const destinations = [
   },
   {
     title: "racksontop.me",
-    description: "Streetwear and original designs. Hoodies, tees, jackets and caps.",
+    description: "Streetwear picked from AliExpress. Hoodies, tees, jackets and bottoms.",
     link: "https://racksontop.me",
     cta: "Browse clothing",
     icon: "🧢",
