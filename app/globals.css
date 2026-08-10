@@ -7,12 +7,12 @@
    page reads them for the one-off gradient, but they now describe paper rather
    than ink. */
 :root {
-  --bg: #fafaf7;
+  --bg: #fafafb;
   --surface: #ffffff;
   --border: rgba(0, 0, 0, 0.06);
-  --gold: #c8a247;
-  --text: #0e1014;
-  --muted: #52525b;
+  --accent: #4f46e5;
+  --text: #10121a;
+  --muted: #52556b;
 }
 
 * {
@@ -37,7 +37,7 @@ html {
 }
 
 ::selection {
-  background: #c8a247;
+  background: #4f46e5;
   color: white;
 }
 
