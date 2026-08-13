@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import ThemeToggle from "@/components/ThemeToggle";
+import AdSense from "@/components/AdSense";
 
 export const metadata: Metadata = {
   title: "Express Coupon — Deals, Discounts & Freebies",
@@ -14,6 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <AdSense />
+      </head>
       <body className="min-h-screen bg-ink-900 text-black">
         {children}
         <ThemeToggle />
