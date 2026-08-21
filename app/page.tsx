@@ -22,6 +22,7 @@ const coupons = [
     description:
       "The full 209-page journal as an instant PDF. 90 days of guided prompts — print it at home or write on a tablet.",
     code: "NEWUSER20",
+    key: "journal",
     store: "jrb.codes",
     // The /NEWUSER20 suffix makes Gumroad recognise the code — the product page
     // returns discount_code:{valid:true,percents:20} with it and nothing
@@ -59,12 +60,12 @@ const coupons = [
 // silently fails on the exact phone someone came to buy is the complaint a
 // coupon site cannot afford.
 const brandCodes = [
-  { brand: "Huawei", country: "Saudi Arabia", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://omgrefer.com/oU0fq" },
-  { brand: "Huawei", country: "UAE", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://omgrefer.com/KfkUv" },
-  { brand: "Huawei", country: "Qatar", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://omgrefer.com/HX4iC" },
-  { brand: "Huawei", country: "Kuwait", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://omgrefer.com/8W0tv" },
-  { brand: "Huawei", country: "Egypt", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://omgrefer.com/FRbqj" },
-  { brand: "Samsung", country: "Saudi Arabia", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://omgrefer.com/vQcuP" },
+  { brand: "Huawei", country: "Saudi Arabia", key: "huawei-sa", flag: "🇸🇦", code: "AFF10", off: "10%", url: "https://omgrefer.com/oU0fq" },
+  { brand: "Huawei", country: "UAE", key: "huawei-ae", flag: "🇦🇪", code: "AEU70", off: "10%", url: "https://omgrefer.com/KfkUv" },
+  { brand: "Huawei", country: "Qatar", key: "huawei-qa", flag: "🇶🇦", code: "AA1Q4", off: "10%", url: "https://omgrefer.com/HX4iC" },
+  { brand: "Huawei", country: "Kuwait", key: "huawei-kw", flag: "🇰🇼", code: "AKKK4", off: "10%", url: "https://omgrefer.com/8W0tv" },
+  { brand: "Huawei", country: "Egypt", key: "huawei-eg", flag: "🇪🇬", code: "AEE04", off: "5%", url: "https://omgrefer.com/FRbqj" },
+  { brand: "Samsung", country: "Saudi Arabia", key: "samsung-sa", flag: "🇸🇦", code: "AFM222", off: "5%", url: "https://omgrefer.com/vQcuP" },
 ];
 
 const BRAND_CODE_CAVEAT = "Excludes new exclusive products";
@@ -77,6 +78,33 @@ const BRAND_CODE_CAVEAT = "Excludes new exclusive products";
 // no way to detect a qualifying purchase through an affiliate link — Amazon and
 // Redbubble do not tell you who bought. Both were promises nothing could keep.
 // The Audible trial was an untracked link earning nothing.
+// The three brands, in the order a visitor arriving from a streetwear video
+// should meet them. `key` is what appears in /go/<key> and in the click log,
+// so it must stay stable even if a title or URL changes.
+const brands = [
+  {
+    key: "racks",
+    title: "racksontop.me",
+    description: "Streetwear from AliExpress — hoodies, cargos, jackets, caps. Filtered and shipped to Saudi Arabia.",
+    cta: "Browse clothing",
+    icon: "\u{1F9E2}",
+  },
+  {
+    key: "hawie",
+    title: "hawie.shop",
+    description: "Gear for walking, trailing, hiking and staying hydrated. Priced from Amazon.sa.",
+    cta: "Browse gear",
+    icon: "\u{1F97E}",
+  },
+  {
+    key: "jrb",
+    title: "jrb.codes",
+    description: "Journals and printables, including the free downloads and the reader discount above.",
+    cta: "See the freebies",
+    icon: "\u{1F319}",
+  },
+];
+
 const destinations = [
   {
     title: "The Shadow Work Journal",
@@ -145,6 +173,47 @@ export default function Home() {
         </p>
       </section>
 
+      {/*
+        Brand strip — deliberately ABOVE the coupons.
+
+        This page is the destination in @racks_deals' TikTok bio, and TikTok is
+        the broad multi-brand front door by design (racksontop.me sits in the
+        Instagram bio instead). But the first two things a visitor used to meet
+        here were a printable journal and Huawei phone codes, so somebody who
+        had just watched a hoodie video landed on a page about phones. The
+        clothing link was third, inside the freebies block, below the fold.
+
+        Every card goes through /go/ (src/worker.ts), which is the only way to
+        learn which brand TikTok traffic actually wants. Streetwear leads
+        because that is what the videos are about; it is not a ranking of the
+        businesses.
+
+        /go/racks points at racksontop.me/style rather than the homepage — the
+        style clusters are the closest thing on that site to what the viewer
+        was just watching.
+      */}
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <h2 className="text-sm font-semibold text-zinc-700 uppercase tracking-wider mb-6">
+          Shop the brands
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {brands.map((b) => (
+            <a
+              key={b.key}
+              href={`/go/${b.key}?src=bio`}
+              className="group rounded-xl border border-black/[0.06] bg-white p-5 hover:border-accent-600/40 hover:shadow-sm transition-all"
+            >
+              <div className="text-2xl mb-2">{b.icon}</div>
+              <div className="font-bold text-black group-hover:text-accent-600 transition-colors mb-1">
+                {b.title}
+              </div>
+              <p className="text-sm text-zinc-600 mb-3">{b.description}</p>
+              <span className="text-sm font-medium text-accent-600">{b.cta} &rarr;</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
       {/* Coupons */}
       <section className="max-w-4xl mx-auto px-6 pb-16">
         <h2 className="text-sm font-semibold text-zinc-700 uppercase tracking-wider mb-6">
@@ -180,7 +249,7 @@ export default function Home() {
               </div>
               <div className="mt-4 pt-4 border-t border-black/[0.06]">
                 <a
-                  href={c.url}
+                  href={c.key ? `/go/${c.key}?src=bio` : c.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-accent-600 hover:underline"
@@ -227,7 +296,7 @@ export default function Home() {
               </div>
               <p className="text-xs text-zinc-500 mb-2">{BRAND_CODE_CAVEAT}</p>
               <a
-                href={b.url}
+                href={`/go/${b.key}?src=bio`}
                 target="_blank"
                 /* Paid affiliate deeplinks, same as the AliExpress cards. */
                 rel="sponsored noopener noreferrer"

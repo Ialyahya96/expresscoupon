@@ -14,7 +14,23 @@
   //   Deploy command:     npx wrangler deploy
   "name": "expresscoupon",
   "compatibility_date": "2026-08-10",
+  // src/worker.ts only ever sees NON-asset paths (/go/*): with no
+  // run_worker_first set, static assets are served before the script runs, so
+  // adding `main` cannot change how any existing page is served.
+  "main": "src/worker.ts",
   "assets": {
-    "directory": "./out"
-  }
+    "directory": "./out",
+    "binding": "ASSETS"
+  },
+  // Deliberately the SAME database racksontop's sensor writes to, so one
+  // /go-stats call at racksontop.me covers the whole estate. Rows from here
+  // carry site='expresscoupon'. The name is racksontop's only because that is
+  // where the sensor was built first.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "racksontop-clicks",
+      "database_id": "07174c41-7f1c-418f-8dcc-67e012c54d12"
+    }
+  ]
 }
