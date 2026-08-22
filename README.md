@@ -1,4 +1,4 @@
-# expresscoupon.io
+# expresscoupon.info
 
 Funnel page for weekly/monthly coupons and free product offers.
 
